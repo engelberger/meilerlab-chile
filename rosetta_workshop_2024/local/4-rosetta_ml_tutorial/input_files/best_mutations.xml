@@ -1,0 +1,28 @@
+<ROSETTASCRIPTS>
+    <SCOREFXNS>
+        <ScoreFunction name="beta" weights="beta"/>
+    </SCOREFXNS>
+    <RESIDUE_SELECTORS>
+        <Chain name="res" chains="A" />
+    </RESIDUE_SELECTORS>
+    <SIMPLE_METRICS>
+        ----------------- Load Probabilities -----------------------------
+    	<LoadedProbabilitiesMetric name="mpnn" filename="mpnn_probs.weights" custom_type="mpnn"/>
+	<LoadedProbabilitiesMetric name="esm" filename="esm_probs.weights" custom_type="esm"/>
+	<LoadedProbabilitiesMetric name="mifst" filename="mifst_probs.weights" custom_type="mifst"/>
+        ----------------- Average the probabilities ------------------------
+        <AverageProbabilitiesMetric name="avg" metrics="mpnn,esm,mifst"/>
+        ----------------- Analyze predictions -------
+        <BestMutationsFromProbabilitiesMetric name="avg_mutations" metric="avg" max_mutations="10" custom_type="avg"/>
+    </SIMPLE_METRICS>
+    <FILTERS>
+    </FILTERS>
+    <MOVERS>
+	 <RunSimpleMetrics name="analysis" metrics="avg_mutations"/>
+	 <SaveProbabilitiesMetricMover name="save_avg" metric="avg" filename="average_probs" filetype="both"/>
+    </MOVERS>
+    <PROTOCOLS>
+        <Add mover="analysis"/>
+        <Add mover="save_avg"/>
+    </PROTOCOLS>
+</ROSETTASCRIPTS>
