@@ -10,6 +10,7 @@ TUTORIAL_PATH="$(pwd)"
 docker run --user $(id -u) -it --rm \
    -v "$AF2_MODEL_PATH":/cache \
    -v "$TUTORIAL_PATH":/work \
+   -w /work \
    ghcr.io/sokrypton/colabfold:1.5.5-cuda12.2.2
 
 echo "Docker container exited"
