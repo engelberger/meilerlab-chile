@@ -80,7 +80,8 @@ For this exercise, we will be preparing our input files in the **protein\_prep/*
 
 	    2. eticlopride_conformers.sdf: This is a set of conformations for eticlopride generated outside of Rosetta. The downloaded ligand eticlopride.sdf file contains only the single conformation found in the PDB so we must expand the library to properly sample the conformational space. We also need to add hydrogen atoms to the model since they are not resolved in the crystal structure. Feel free to open the file in Pymol and use the arrow keys in the bottom right of the window to scroll through the different conformations:
 
-				pymol eticlopride_conformers.sdf
+				conda activate RAI_workshop
+                pymol eticlopride_conformers.sdf
 
 			This particular conformational library was generated using the Meiler lab BioChemicalLibrary (BCL). The BCL is a suite of tools for protein modeling, small molecule calculations, and machine learning. If you are interested in licensing the BCL, please visit [http://www.meilerlab.org/bclcommons](http://www.meilerlab.org/bclcommons) or ask one of the instructors. The BCL conformer generator tool is described in "BCL::Conf: small molecule conformational sampling using a knowledge based rotamer library" (Kothiwale, Mendenhall, Meiler 2015)  Other methods of ligand conformer generation include OpenEye, MOE and web-servers such as [Frog 2.1](http://bioserv.rpbs.jussieu.fr/cgi-bin/Frog2) or [DG-AMMOS](http://mobyle.rpbs.univ-paris-diderot.fr/cgi-bin/portal.py#forms::DG-AMMOS). The generated libraries will differ depending on the chosen method. 
 
@@ -195,7 +196,8 @@ Since we generated such a small number of structures, it is unlikely to capture 
         	cd ..
       		~/meilerlab-chile/rosetta_workshop_2024/local/tutorials/2-ligand_docking/1_vanilla_docking/scripts/calculate_ligand_rmsd.py \
             	-n 3PBL_A_ETQ_0003.pdb -c X -a 7 -o rmsds_to_best_model.data *_000*.pdb
-    	This command compares all five of your models to the one after the -n option. Your best scoring model may not be the one labelled 0003 so feel free to customize that option. The -c tells the script that the ligand is denoted as chain X. The -a tells the script to use 7 angstroms as the cutoff sphere for side-chain RMSDs. The -o option is the output file name. Lastly, we provided a list of PDBs using the wildcard selection.
+    	
+        This command compares all five of your models to the one after the -n option. Your best scoring model may not be the one labelled 0003 so feel free to customize that option. The -c tells the script that the ligand is denoted as chain X. The -a tells the script to use 7 angstroms as the cutoff sphere for side-chain RMSDs. The -o option is the output file name. Lastly, we provided a list of PDBs using the wildcard selection.
     
     	The script produces the rmsd_to_best_model.data file that you can open in any text editor. Feel free to ask questions if you would like to discuss more of how to customize this script for your own applications. Now let’s go back to the pre-generated model directory:
     
