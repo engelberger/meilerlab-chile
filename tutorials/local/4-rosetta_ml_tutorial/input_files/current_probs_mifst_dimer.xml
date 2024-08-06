@@ -1,0 +1,17 @@
+<ROSETTASCRIPTS>
+    <RESIDUE_SELECTORS>
+        <Chain name="res" chains="1,2" />
+    </RESIDUE_SELECTORS>
+    <SIMPLE_METRICS>
+        <MIFSTProbabilitiesMetric name="mifst" residue_selector="res" multirun="false" use_gpu="false"/>
+        <CurrentProbabilityMetric name="current" metric="mifst" custom_type="score"/>
+    </SIMPLE_METRICS>
+    <FILTERS>
+    </FILTERS>
+    <MOVERS>
+        <RunSimpleMetrics name="run" metrics="current" metric_to_bfactor="score"/>
+    </MOVERS>
+    <PROTOCOLS>
+        <Add mover_name="run"/>
+    </PROTOCOLS>
+</ROSETTASCRIPTS>

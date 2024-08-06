@@ -1,0 +1,36 @@
+<ROSETTASCRIPTS>
+    <SCOREFXNS>
+        <ScoreFunction name="beta" weights="beta"/>
+    </SCOREFXNS>
+    <RESIDUE_SELECTORS>
+        <Chain name="res" chains="A" />
+    </RESIDUE_SELECTORS>
+    <SIMPLE_METRICS>
+        ----------------- Load the probabilities ------------------------
+        <LoadedProbabilitiesMetric name="avg" filename="average_probs.weights" custom_type="avg"/>
+        ----------------- score with MPNN predictions ----------------------
+        <ProteinMPNNProbabilitiesMetric name="score_mpnn" residue_selector="res"/>
+        <PerResidueEsmProbabilitiesMetric name="score_esm" residue_selector="res" model="esm2_t6_8M_UR50D"/>
+        <MIFSTProbabilitiesMetric name="score_mifst" residue_selector="res" multirun="false" use_gpu="false"/>
+        <PseudoPerplexityMetric name="mpnn_perplexity" metric="score_mpnn" custom_type="mpnn"/>
+        <PseudoPerplexityMetric name="esm_perplexity" metric="score_esm" custom_type="esm"/>
+        <PseudoPerplexityMetric name="mifst_perplexity" metric="score_mifst" custom_type="mifst"/>
+    </SIMPLE_METRICS>
+    <FILTERS>
+    </FILTERS>
+    <MOVERS>
+        <SampleSequenceFromProbabilities name="sample" metric="avg" pos_temp="1.5" aa_temp="0.3" prob_cutoff="0.0001" delta_prob_cutoff="-0.3" max_mutations="40" use_cached_data="true"/>
+        <FastRelax name="relax" relaxscript="MonomerRelax2019" scorefxn="beta">
+        <MoveMap name="rest" bb="true" chi="true"/>
+        </FastRelax>
+        <RunSimpleMetrics name="run_perplexity" metrics="mpnn_perplexity,esm_perplexity"/>
+        RunSimpleMetrics name="run_perplexity_mifst" metrics="mifst_perplexity"/>
+    </MOVERS>
+    <PROTOCOLS>
+        <Add mover_name="sample"/>
+        <Add mover_name="relax"/>
+        <Add mover_name="run_perplexity"/>
+        Add mover_name="run_perplexity_mifst"/>
+    </PROTOCOLS>
+    <OUTPUT scorefxn="beta"/>
+</ROSETTASCRIPTS>

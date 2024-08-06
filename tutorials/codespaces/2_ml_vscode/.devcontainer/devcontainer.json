@@ -1,0 +1,26 @@
+{
+    "name": "Rosetta ML Tutorial",
+    "build": {
+        "dockerfile": "Dockerfile",
+        "context": ".."
+    },
+    // Uncomment the following lines if you are using a GPU
+    // "runArgs": [
+    //     "--gpus", "all"
+    // ],
+    "mounts": [
+        "source=${localEnv:USERPROFILE}${localEnv:HOME}/rosetta_ml_weights/esm2_t30_150M_UR50D/ML_graphs-main-tensorflow_graphs-ESM-esm2_t30_150M_UR50D/tensorflow_graphs/ESM/esm2_t30_150M_UR50D,target=/usr/local/database/protocol_data/tensorflow_graphs/tensorflow_graph_repo_submodule/ESM/esm2_t30_150M_UR50D,type=bind,consistency=cached",
+        "source=${localEnv:USERPROFILE}${localEnv:HOME}/rosetta_ml_weights/mifst/ML_graphs-main-pytorch_graphs-MIF-ST/pytorch_graphs/MIF-ST,target=/usr/local/database/protocol_data/inverse_folding/mifst,type=bind,consistency=cached",
+        "source=${localEnv:USERPROFILE}${localEnv:HOME}/Documents/Binaries/rosetta,target=/rosetta_host,type=bind,consistency=cached"
+    ],
+    "workspaceMount": "source=${localWorkspaceFolder},target=/work,type=bind,consistency=cached",
+    "workspaceFolder": "/work",
+    "customizations": {
+        "vscode": {
+            "extensions": [
+                "ms-python.python",
+                "ms-vscode.cpptools"
+            ]
+        }
+    }
+}

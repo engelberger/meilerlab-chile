@@ -1,0 +1,1 @@
+~/rosetta_workshop/rosetta/main/source/bin/rosetta_scripts.linuxgccrelease \ @inputs/options -docking:ligand:ligand_ensemble 0 -nstruct 1

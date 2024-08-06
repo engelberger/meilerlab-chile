@@ -1,0 +1,1 @@
+~/rosetta_workshop/rosetta/main/source/scripts/python/public/molfile_to_params.py   \ prep/make_params/make_params.4AGL.sdf --chain B -n 00B -p 00B --conformers-in-one-file

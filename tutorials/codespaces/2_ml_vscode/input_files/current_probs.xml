@@ -1,0 +1,20 @@
+<ROSETTASCRIPTS>
+    <SCOREFXNS>
+        <ScoreFunction name="beta" weights="beta"/>
+    </SCOREFXNS>
+    <RESIDUE_SELECTORS>
+        <Chain name="res" chains="A" />
+    </RESIDUE_SELECTORS>
+    <SIMPLE_METRICS>
+        <LoadedProbabilitiesMetric name="prediction" filename="%%filename%%"/>
+        <CurrentProbabilityMetric name="current" metric="prediction" custom_type="score"/>
+    </SIMPLE_METRICS>
+    <FILTERS>
+    </FILTERS>
+    <MOVERS>
+        <RunSimpleMetrics name="run" metrics="current" metric_to_bfactor="score"/>
+    </MOVERS>
+    <PROTOCOLS>
+        <Add mover_name="run"/>
+    </PROTOCOLS>
+</ROSETTASCRIPTS>

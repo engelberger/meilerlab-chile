@@ -1,0 +1,24 @@
+<ROSETTASCRIPTS>
+  <SCOREFXNS>
+    <ScoreFunction name="ref2015" weights="ref2015"/>
+  </SCOREFXNS>
+    <RESIDUE_SELECTORS>
+      <Chain name="all" chains="1,2"/>
+    </RESIDUE_SELECTORS>
+    <SIMPLE_METRICS>
+        <ProteinMPNNProbabilitiesMetric name="mpnn" residue_selector="all"/>
+	<MIFSTProbabilitiesMetric name="mifst" residue_selector="all" feature_selector="all" multirun="false" use_gpu="false"/>
+	<PseudoPerplexityMetric name="perplexity_mifst" metric="mifst" custom_type="MIFST"/>
+	<PseudoPerplexityMetric name="perplexity_mpnn" metric="mpnn" custom_type="MPNN"/>
+    </SIMPLE_METRICS>
+    <FILTERS>
+    </FILTERS>
+    <MOVERS>
+    	<InterfaceAnalyzerMover name="intana" scorefxn="ref2015" pack_separated="true"
+        interface_sc="false" use_jobname="false" interface="A_B" tracer="false" delta_metrics="perplexity_mpnn,perplexity_mifst"/>
+    </MOVERS>
+    <PROTOCOLS>
+	<Add mover="intana"/>
+    </PROTOCOLS>
+    <OUTPUT scorefxn="ref2015"/>
+</ROSETTASCRIPTS>

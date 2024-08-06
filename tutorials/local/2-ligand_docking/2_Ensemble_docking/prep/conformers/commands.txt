@@ -1,0 +1,1 @@
+bcl.exe molecule:ConformerGenerator -ensemble_filenames prep/aligned_ligands/4AGL.withH.sdf \ -conformers_single_file  prep/conformers/4AGL.conformers.sdf
