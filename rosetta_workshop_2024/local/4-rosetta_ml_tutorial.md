@@ -25,9 +25,9 @@ If you want to try making files that already exist (e.g., input files), write th
    docker pull rosettacommons/rosetta:ml
    ```
 
-3. Enter the `1-rosetta_ml_tutorial` folder to run the tutorial:
+3. Enter the `4-rosetta_ml_tutorial` folder to run the tutorial:
    ```bash
-   cd meilerlab-chile/rosetta_workshop_2024/local/4-rosetta_ml_tutorial
+   cd ~/meilerlab-chile/rosetta_workshop_2024/local/4-rosetta_ml_tutorial
    ```
 
 4. Run the `download_weights.sh` script located in the `rosetta_workshop_2024` folder **(Note: This step has been already performed in the computer you are now using)** . This will download weights for the ESM protein language model family (specifically, esm2_t30_150M_UR50D), and the MIF-ST model:
