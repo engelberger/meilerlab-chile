@@ -3,6 +3,14 @@
 # Set up error handling
 set -e
 
+# Ensure we're in the user's home directory
+cd "$HOME"
+
+# Create a directory for the weights if it doesn't exist
+weightsDir="rosetta_ml_weights"
+mkdir -p "$weightsDir"
+cd "$weightsDir"
+
 # Function to check if a command was successful
 check_status() {
     if [ $? -ne 0 ]; then
@@ -12,34 +20,6 @@ check_status() {
         echo "$1 completed successfully"
     fi
 }
-
-# Function to install gdown
-install_gdown() {
-    if [ "$(id -u)" -eq 0 ]; then
-        # Running as root (sudo), use apt-get
-        apt-get update
-        apt-get install -y python3-pip
-        pip3 install gdown
-    else
-        # Running as normal user, use pip
-        pip install gdown
-    fi
-    check_status "gdown installation"
-}
-
-# Ensure we're in the user's home directory
-if [ "$(id -u)" -eq 0 ]; then
-    # If running as root, use the invoking user's home directory
-    SUDO_USER_HOME=$(eval echo ~$SUDO_USER)
-    cd "$SUDO_USER_HOME"
-else
-    cd "$HOME"
-fi
-
-# Create a directory for the weights if it doesn't exist
-weightsDir="rosetta_ml_weights"
-mkdir -p "$weightsDir"
-cd "$weightsDir"
 
 # Function to download and extract a model using gdown
 download_and_extract_gdown() {
@@ -86,7 +66,8 @@ download_alphafold2_weights() {
 # Check if gdown is installed, if not, install it
 if ! command -v gdown &> /dev/null; then
     echo "gdown is not installed. Installing gdown..."
-    install_gdown
+    pip install gdown
+    check_status "gdown installation"
 fi
 
 # Check if Docker is installed
@@ -96,23 +77,16 @@ if ! command -v docker &> /dev/null; then
 fi
 
 # Download and extract ESM model
-#download_and_extract_gdown "11odkcNsUTf8wnbfNJMEXpBKbevbDfh4f" "esm2_t30_150M_UR50D" "ML_graphs-main-tensorflow_graphs-ESM-esm2_t30_150M_UR50D/tensorflow_graphs/ESM/esm2_t30_150M_UR50D"
+download_and_extract_gdown "11odkcNsUTf8wnbfNJMEXpBKbevbDfh4f" "esm2_t30_150M_UR50D" "ML_graphs-main-tensorflow_graphs-ESM-esm2_t30_150M_UR50D/tensorflow_graphs/ESM/esm2_t30_150M_UR50D"
 
 # Download and extract MIF-ST model
-#download_and_extract_gdown "1q1fRusKhNpnphUSbPeAewOp0Zl6xreXS" "mifst" "ML_graphs-main-pytorch_graphs-MIF-ST/pytorch_graphs/MIF-ST"
+download_and_extract_gdown "1q1fRusKhNpnphUSbPeAewOp0Zl6xreXS" "mifst" "ML_graphs-main-pytorch_graphs-MIF-ST/pytorch_graphs/MIF-ST"
 
 # Download AlphaFold2 weights
 download_alphafold2_weights
 
 echo "All models have been downloaded and extracted successfully."
 echo "You can find the extracted files in the following directories:"
-echo "ESM model: $(pwd)/esm2_t30_150M_UR50D"
-echo "MIF-ST model: $(pwd)/mifst"
-echo "AlphaFold2 weights: $(pwd)/alphafold2"
-
-# Echo the command to run AlphaFold2 manually
-echo ""
-echo "To run AlphaFold2 manually, use the following command (replace /path/to/input and /path/to/output with your actual paths):"
-echo "docker run --rm -it -v $(pwd)/alphafold2:/cache:ro -v /path/to/input:/mnt/input -v /path/to/output:/mnt/output ghcr.io/sokrypton/colabfold:1.5.5-cuda12.2.2 colabfold_batch /mnt/input/your_fasta_file.fasta /mnt/output --use_gpu"
-echo ""
-echo "Make sure to replace '/path/to/input' with the directory containing your FASTA file, and '/path/to/output' w
+echo "ESM model: $HOME/$weightsDir/esm2_t30_150M_UR50D"
+echo "MIF-ST model: $HOME/$weightsDir/mifst"
+echo "AlphaFold2 weights: $HOME/$weightsDir/alphafold2"
