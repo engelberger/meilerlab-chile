@@ -141,17 +141,48 @@ For this exercise, we will be preparing our input files in the **protein\_prep/*
         2. options.txt - This is the options file that tells Rosetta where to locate our input PDB structures and ligand parameters. It also directs Rosetta to the proper XML file. 
         3. crystal_complex.pdb - This is the D3-eticlopride complex from the PDB. It will serve as the correct answer in our case allowing us to make comparisons between our models and actual structures. 
 
-5. Run the docking study:   
+5. Run the docking study:
 
-        ~/rosetta/main/source/bin/rosetta_scripts.linuxgccrelease \
-          @options.txt -nstruct 5
+   There are two ways to run the docking study: directly using Rosetta (if installed) or using Docker.
 
+   a. Using Rosetta directly (if installed):
 
-	This should take a few minutes at most, as we are using a reduced number of output structures. Feel free to generate more if you want, but we do provide an example of 500 models in the `answers/docking/out/`.
+      ```bash
+      ~/rosetta/main/source/bin/rosetta_scripts.linuxgccrelease \
+        @options.txt -nstruct 5
+      ```
 
-    Note: We also provided a docker version which can be run inside the `local/2-ligand_docking/1_vanilla_docking/docking folder`, this docker has pre compiled version of Rosetta, that allows you to run it just by pulling the docker image. Examine the docker file and ask questions to the instructors about the command line options.
+   b. Using Docker (recommended for consistent environment):
 
-        bash run_docker.sh
+      Navigate to the `local/2-ligand_docking/1_vanilla_docking/docking` folder and run:
+
+      ```bash
+      # Execute the bash file inside the docking folder
+      bash run_docker.sh
+      ```
+
+      Or, to run the Docker command manually:
+
+      ```bash
+      docker run -it --rm \
+        -v "$(pwd)":/work \
+        -w /work \
+        rosettacommons/rosetta:serial \
+        rosetta_scripts.cxx11threadserialization.linuxgccrelease @options.txt -nstruct 5
+      ```
+
+   This should take a few minutes at most, as we are using a reduced number of output structures. Feel free to generate more if you want, but we do provide an example of 500 models in the `answers/docking/out/` directory.
+
+   Note: The Docker version has a pre-compiled version of Rosetta, allowing you to run it just by pulling the Docker image. Examine the `run_docker.sh` file for more details on the command line options.
+
+   Key points about the Docker command:
+   - It mounts the current directory (`$(pwd)`) to `/work` in the container
+   - Sets the working directory to `/work`
+   - Uses the `rosettacommons/rosetta:serial` image
+   - Runs the `rosetta_scripts.cxx11threadserialization.linuxgccrelease` executable
+   - Passes the `options.txt` file and sets `-nstruct 5`
+
+   Feel free to ask the instructors any questions about the command line options or the Docker setup.
 
 6. The Rosetta models are saved with the prefix 3PBL\_A_ETQ\_ followed by a four digit identifier. Each model PDB contains the coordinates and Rosetta score corresponding to that model. In addition, the model scores are summarized in table format in the score.sc file. The two main scoring terms to consider are:
     1. total_score: the total score is reflective of the entire protein-ligand complex and is good as an overall model assessment. 
@@ -302,6 +333,44 @@ Each simulation will produce X models, where X is the number of input ligands. T
 
 	~/rosetta/main/source/bin/rosetta_scripts.linuxgccrelease \
     	@inputs/options -docking:ligand:ligand_ensemble 0 -nstruct 1
+
+
+Alternative: Running Rosetta Docking with Docker
+To run the Rosetta docking script using Docker, follow these steps:
+
+1. Ensure you have Docker installed on your system.
+
+2. Pull the Rosetta Docker image:
+   ```
+   docker pull rosettacommons/rosetta:serial
+   ```
+
+3. Navigate to the directory containing your input files and options file.
+
+4. Run the following Docker command:
+   ```
+   docker run -it --rm \
+     -v "$(pwd)":/work \
+     -w /work \
+     rosettacommons/rosetta:serial \
+     rosetta_scripts.cxx11threadserialization.linuxgccrelease @inputs/options -docking:ligand:ligand_ensemble 0 -nstruct 1
+   ```
+
+   Here's what each part of the command does:
+   - `docker run`: Runs a Docker container
+   - `-it`: Allows interactive terminal access
+   - `--rm`: Removes the container after it exits
+   - `-v "$(pwd)":/work`: Mounts the current directory to /work in the container
+   - `-w /work`: Sets the working directory in the container to /work
+   - `rosettacommons/rosetta:serial`: Specifies the Docker image to use
+   - `rosetta_scripts.cxx11threadserialization.linuxgccrelease`: The Rosetta executable to use
+   - The rest are the options and flags for the Rosetta command
+
+5. The results will be saved in your current directory.
+
+This Docker approach allows you to run Rosetta without installing it directly on your system. It ensures a consistent environment and makes it easier to manage dependencies.
+
+Note: Make sure your `inputs/options` file and any other required input files are in your current directory before running the Docker command.
 
 ### Output and Analysis
 
