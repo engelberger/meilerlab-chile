@@ -146,7 +146,12 @@ For this exercise, we will be preparing our input files in the **protein\_prep/*
         ~/rosetta/main/source/bin/rosetta_scripts.linuxgccrelease \
           @options.txt -nstruct 5
 
+
 	This should take a few minutes at most, as we are using a reduced number of output structures. Feel free to generate more if you want, but we do provide an example of 500 models in the `answers/docking/out/`.
+
+    Note: We also provided a docker version which can be run inside the `local/2-ligand_docking/1_vanilla_docking/docking folder`, this docker has pre compiled version of Rosetta, that allows you to run it just by pulling the docker image. Examine the docker file and ask questions to the instructors about the command line options.
+
+        bash run_docker.sh
 
 6. The Rosetta models are saved with the prefix 3PBL\_A_ETQ\_ followed by a four digit identifier. Each model PDB contains the coordinates and Rosetta score corresponding to that model. In addition, the model scores are summarized in table format in the score.sc file. The two main scoring terms to consider are:
     1. total_score: the total score is reflective of the entire protein-ligand complex and is good as an overall model assessment. 
