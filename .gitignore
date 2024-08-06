@@ -160,3 +160,5 @@ cython_debug/
 #  and can be added to the global gitignore or merged into this file.  For a more nuclear
 #  option (not recommended) you can uncomment the following to ignore the entire idea folder.
 #.idea/
+rosetta_workshop_2024/local/1-structure_prediction/2M2Q.fasta
+rosetta_workshop_2024/local/1-structure_prediction/1FD4_dimer.fasta
