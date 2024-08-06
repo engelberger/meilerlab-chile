@@ -70,7 +70,7 @@ For workshop participants:
 
 3. The conda environment is pre-configured. Activate it with:
    ```
-   conda activate rosetta_workshop
+   conda activate RAI_workshop
    ```
 
 4. Required model weights are pre-downloaded.
