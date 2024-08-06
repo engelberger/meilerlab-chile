@@ -27,13 +27,13 @@ If you want to try making files that already exist (e.g., input files), write th
 
 3. Enter the `1-rosetta_ml_tutorial` folder to run the tutorial:
    ```bash
-   cd rosetta_workshop_2024/1-rosetta_ml_tutorial
+   cd meilerlab-chile/rosetta_workshop_2024/local/4-rosetta_ml_tutorial
    ```
 
 4. Run the `download_weights.sh` script located in the `rosetta_workshop_2024` folder **(Note: This step has been already performed in the computer you are now using)** . This will download weights for the ESM protein language model family (specifically, esm2_t30_150M_UR50D), and the MIF-ST model:
     ```bash
     #This step has been already performed in the computer you are now using
-    bash ../download_weights.sh
+    bash ../../download_weights.sh
     ```
 
 5. Start the Docker container using the `run_docker.sh` script from the `input_files` folder. In brief, we are using this script for binding the folders that contain the weights that we just downloaded to their expected locations inside the Rosetta Docker image, and also binding a full local version of Rosetta and your current working directory to the work folder inside the Rosetta Docker image:

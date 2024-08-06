@@ -63,7 +63,7 @@ For workshop participants:
 
 1. The repository is pre-cloned in your workstation's home directory. Navigate to it:
    ```
-   cd ~/rosetta_workshop_2024
+   cd ~/meilerlab-chile/rosetta_workshop_2024/local
    ```
 
 2. All required software (Docker, Conda, PyMOL) is pre-installed on your workstation.

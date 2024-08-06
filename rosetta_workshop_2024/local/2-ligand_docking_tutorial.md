@@ -47,7 +47,7 @@ For this exercise, we will be preparing our input files in the **protein\_prep/*
 
 1. Navigate to the ligand docking directory where you will find the **ligand_prep/**, **protein_prep/**, **docking/**, and **answers/** folders 
 
-		cd ~/rosetta_workshop_2024/2-ligand_docking/1_vanilla_docking
+		cd ~/meilerlab-chile/rosetta_workshop_2024/local/2-ligand_docking/1_vanilla_docking
 
 2. Prepare a human dopamine 3 receptor structure. We will do this by obtaining the crystal structure (3PBL) and removing the excess information. 
     1. Change into the **protein\_prep/** directory with the cd command
@@ -164,7 +164,7 @@ For this exercise, we will be preparing our input files in the **protein\_prep/*
 10. The visualize_ligand.py script in the scripts directory is a useful shortcut for doing quick visualizations of protein-ligand interfaces. It takes in a PDB and generates a .pse Pymol session by applying common visualization settings. The example below shows the command lines for using this script on the 0001 model but you are free to try it on any one (or more!) of your models. 
 
         conda activate RAI_workshop
-        python ~/rosetta_workshop_2024/2-ligand_docking/1_vanilla_docking/scripts/visualize_ligand.py \ 
+        python ~/meilerlab-chile/rosetta_workshop_2024/local/2-ligand_docking/1_vanilla_docking/scripts/visualize_ligand.py \ 
         3PBL_A_ETQ_0001.pdb
 
         pymol 3PBL_A_ETQ_0001.pse
@@ -185,7 +185,7 @@ Since we generated such a small number of structures, it is unlikely to capture 
 
 		These values are generated directly from the scorefile using the interface\_delta_X score and the ligand_rms_no_super_X columns. This can be done with `awk` commands, but we provided extract_scores.bash script to do this. This is a very specific script made for extracting useful information in ligand docking experiments. However, the script can be easily customized for extracting other information from Rosetta score files. If you have any in-depth questions about how it works or how to modify it, feel free to ask. To see how it in action, run:
 
-            ~/rosetta_workshop_2024/2-ligand_docking/1_vanilla_docking/scripts/extract_scores.bash score.sc 
+            ~/meilerlab-chile/rosetta_workshop_2024/local/2-ligand_docking/1_vanilla_docking/scripts/extract_scores.bash score.sc 
 
 
     3. rmsds\_to\_best\_model.data: a space separated file containing RMSD comparisons with the best scoring model (not crystal structure!) for all PDB files. A more detailed discussion of this file will come further down in the tutorial. This file has the filename in the first column, an all heavy-atom RMSD in the second column, a ligand only RMSD without superimposition in the third column, a ligand only RMSD with superimposition in the fourth column, and heavy atom RMSDs of side-chains around the ligand in the fifth column. 
@@ -193,7 +193,7 @@ Since we generated such a small number of structures, it is unlikely to capture 
     	This file is generated using the calculate_ligand_rmsd.py script. It uses pymol to compare PDB structures containing the same residues and ligand atoms. It’s a quick way of calculating the ligand RMSDs of Rosetta models. To see how this works, let’s try it on the five models we generated in the previous steps: 
     	
         	cd ..
-      		~/rosetta_workshop_2024/tutorials/ligand_docking/1_vanilla_docking/scripts/calculate_ligand_rmsd.py \
+      		~/meilerlab-chile/rosetta_workshop_2024/local/tutorials/2-ligand_docking/1_vanilla_docking/scripts/calculate_ligand_rmsd.py \
             	-n 3PBL_A_ETQ_0003.pdb -c X -a 7 -o rmsds_to_best_model.data *_000*.pdb
     	This command compares all five of your models to the one after the -n option. Your best scoring model may not be the one labelled 0003 so feel free to customize that option. The -c tells the script that the ligand is denoted as chain X. The -a tells the script to use 7 angstroms as the cutoff sphere for side-chain RMSDs. The -o option is the output file name. Lastly, we provided a list of PDBs using the wildcard selection.
     
@@ -203,7 +203,7 @@ Since we generated such a small number of structures, it is unlikely to capture 
 
      4. PNG files: plots made from the various data file mentioned above. The Python matplotlib package was used here but you are free to use any plotting software you prefer. There is one plotting script in the script folder. You can use that to plot xy scatter plot for rmsd vs score. To use this,
 		
-        	python ~/rosetta_workshop_2024/tutorials/ligand_docking/1_vanilla_docking/scripts/score_vs_rmsd.py score_vs_rmsd.csv name_of_your_output_file
+        	python ~/meilerlab-chile/rosetta_workshop_2024/local/tutorials/2-ligand_docking/1_vanilla_docking/scripts/score_vs_rmsd.py score_vs_rmsd.csv name_of_your_output_file
 
 3.  In this case, we have the correct answer based on the crystal structure so we can examine a score vs rmsd plot to see if the better scoring models are indeed closer to the native ligand binding mode. Open up the plot with the following command:
 
@@ -265,7 +265,7 @@ PyMol pair fitting is an easy way to manually align ligands by minimizing distan
 
 We need to again generate conformers for the ligands. Below is an template BCL script used to generate conformer files, but you can use others if you choose. Examples of generated conformers files are in prep/conformers.
 		
-    cd ~/rosetta_workshop_2024/2-ligand_docking/2_Ensemble_docking
+    cd ~/meilerlab-chile/rosetta_workshop_2024/local/2-ligand_docking/2_Ensemble_docking
 	alias bcl.exe=$HOME/bcl-4.3.1-Linux-x86_64/bcl.exe
     export LD_LIBRARY_PATH="/usr/lib64:/usr/lib:$HOME/bcl-4.3.1-Linux-x86_64"
     bcl.exe molecule:ConformerGenerator -ensemble_filenames prep/aligned_ligands/4AGL.withH.sdf \

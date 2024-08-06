@@ -29,13 +29,13 @@ If you want to try making files that already exist (e.g., input files), write th
 
 3. Enter the `1-structure_prediction` folder to run the tutorial:
    ```bash
-   cd rosetta_workshop_2024/1-structure_prediction
+   cd meilerlab-chile/rosetta_workshop_2024/local/1-structure_prediction
    ```
 
 4. Run the `download_weights.sh` script located in the `rosetta_workshop_2024` folder **(Note: This step has been already performed in the computer you are now using)** . This will download weights for AlphaFold2:
     ```bash
     #This step has been already performed in the computer you are now using
-    bash ../download_weights.sh
+    bash ../../download_weights.sh
     ```
 
 ## 1. Simple Structure Prediction
